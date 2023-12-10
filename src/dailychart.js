@@ -88,11 +88,20 @@ class Dailychart {
   }
 
   path() {
+    const d1 = this.getPath(0, this.options.closeIndex + 1);
+    const d2 = this.getPath(this.options.closeIndex);
+    return [d1, d2];
+  }
+
+  getPath(start, end) {
+
     const inc = this.width / (this.length - 1);
     const d = [];
 
-    for (let i = 0; i < this.values.length; i++) {
-      d.push(i === 0 ? 'M' : 'L');
+    end = end === undefined ? this.values.length : end;
+
+    for (let i = start; i < end; i++) {
+      d.push(i === start ? 'M' : 'L');
       d.push(i * inc);
       d.push(this.values[i]);
     }
@@ -101,18 +110,32 @@ class Dailychart {
   }
 
   draw() {
-    const { lineWidth, colorPositive, colorNegative, fillPositive, fillNegative } = this.options;
+    const {
+      lineWidth,
+      colorPositive,
+      colorNegative,
+      fillPositive,
+      fillNegative,
+      colorNormal
+    } = this.options;
 
     const id = this.id();
     const idPositive = `dailychart-${id}-positive`;
     const idNegative = `dailychart-${id}-negative`;
+    const idNormal = `dailychart-${id}-normal`;
 
-    const d = this.path();
-    const dPositive = `${d} V ${this.height} H 0 Z`;
-    const dNegative = `${d} V 0 H 0 Z`;
+    const path = this.path();
+
+    const dNormal = path[0];
+    const d = path[1];
+    const closeIndexX = this.width / (this.length - 1) * this.options.closeIndex;
+    const dPositive = `${d} V ${this.height} H ${closeIndexX} V ${this.previous} Z`;
+    const dNegative = `${d} V 0 H ${closeIndexX} V ${this.previous} Z`;
 
     const svg = this.svgElement();
     const linePrevious = this.lineElement(this.previous);
+
+    const pathNormal = this.pathElement(dNormal, lineWidth, colorNormal, '', idNormal);
 
     const pathPositive = this.pathElement(d, lineWidth, colorPositive, '', idPositive);
     const areaPositive = this.pathElement(dPositive, 0, '', fillPositive, idPositive);
@@ -127,15 +150,15 @@ class Dailychart {
     clipPositive.appendChild(rectPositive);
     clipNegative.appendChild(rectNegative);
 
+    svg.appendChild(linePrevious);
     svg.appendChild(clipPositive);
     svg.appendChild(clipNegative);
 
-    svg.appendChild(linePrevious);
+    svg.appendChild(pathNormal);
     svg.appendChild(areaPositive);
     svg.appendChild(areaNegative);
     svg.appendChild(pathPositive);
     svg.appendChild(pathNegative);
-
     this.element.appendChild(svg);
   }
 
@@ -201,10 +224,12 @@ Dailychart.prototype.defaultOptions = {
   width: undefined,
   height: undefined,
   lineWidth: 1,
-  colorPositive: '#33AE45',
-  colorNegative: '#EB5757',
+  colorPositive: '#EB5757',
+  colorNegative: '#33AE45',
   fillPositive: '',
   fillNegative: '',
   closeWidth: 1,
-  closeColor: '#e0e0e0'
+  closeColor: '#e0e0e0',
+  closeIndex: 0,
+  colorNormal: '#3d3d3d',
 };

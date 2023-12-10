@@ -142,7 +142,7 @@
     <div class="example">
       <p>Intraday chart:</p>
       <div class="fig">
-        <div class="chart" id="chart-intraday" data-dailychart-values="1292.2,1292.0,1292.1,1291.8,1291.8,1292.1,1291.9,1291.6,1291.7,1291.7,1291.6,1291.8,1291.6,1291.7,1292.0,1291.6,1291.4,1291.2,1290.5,1290.5,1290.6,1290.5,1290.4,1289.8,1289.5,1290.0,1289.6,1289.7,1289.1,1288.8,1289,1289.2,1289.4,1289.7,1289.7,1289.6,1289.2,1290.1,1290.3,1290.5,1290.7,1292.3,1292.5,1291.7,1292.1,1292.1,1292.6,1292.7,1292.8,1292.7" data-dailychart-close="1292.0" data-dailychart-length="93"></div>
+        <div class="chart" id="chart-intraday" data-dailychart-values="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20" data-dailychart-close="4"></div>
       </div>
       <div class="code">
 <pre>Dailychart.create('#chart-intraday', {
@@ -152,12 +152,15 @@
       </div>
     </div>
   </div>
-  <script src="https://unpkg.com/dailychart"></script>
+  <script src="./dist/dailychart.js"></script>
   <script>
     Dailychart.create('#chart-default');
 
     Dailychart.create('#chart-line', {
-      lineWidth: 2
+      lineWidth: 2,
+      startIndex: 10,
+      closeWidth: 1,
+      closeIndex: 20
     });
 
     Dailychart.create('#chart-color', {
@@ -176,12 +179,18 @@
     Dailychart.create('#chart-fill', {
       fillPositive: '#d6efda',
       fillNegative: '#fbdddd',
-      closeColor: ''
+      closeIndex: 0,
+      colorNormal: "yellow",
+      closeWidth: 2,
+      lineWidth: 2
     });
 
     Dailychart.create('#chart-intraday', {
       fillPositive: '#d6efda',
-      fillNegative: '#fbdddd'
+      fillNegative: '#fbdddd',
+      closeIndex: 0,
+      colorNormal: "#000",
+      fillNormal: ""
     });
   </script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>

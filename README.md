@@ -65,13 +65,15 @@ The second parameter of the constructor is an object that contains the number of
 - `width` - Chart width. If not set it equals to container's width.
 - `height` - Chart height. If not set it equals to container's height.
 - `lineWidth` - Line width of the graph (default: 1).
-- `colorPositive` - Color of the positive part of the graph (default: '#33AE45').
-- `colorNegative` - Color of the negative part of the graph (default: '#EB5757').
+- `colorPositive` - Color of the positive part of the graph (default: '#EB5757').
+- `colorNegative` - Color of the negative part of the graph (default: '#33AE45').
 - `fillPositive` - Fill color of the positive area (default: '').
 - `fillNegative` - Fill color of the negative area (default: '').
 - `closeWidth` - Width of the close line (default: 1).
 - `closeColor` - Color of the close line (default: '#e0e0e0').
- 
+- `closeIndex` - When to start drawing up and down colors (default: 0).
+- `colorNormal` - Color of the normal line (default: '#3d3d3d').
+
  ## License
 
  Dailychart.js is available under the [MIT License](https://github.com/kbychkov/dailychart/blob/master/LICENSE).
